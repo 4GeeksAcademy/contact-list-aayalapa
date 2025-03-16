@@ -8,21 +8,41 @@ export const Home = () => {
 	const {store, dispatch} =useGlobalReducer()
 	
 	useEffect(()=>{
-		dispatch({type:"get_contacts"})
+		const fetchContacts = ()=>{
+			fetch(store?.contactUrl+"agendas/aayalapa/contacts")
+			.then((resp)=>resp.json())
+			.then((data)=>{
+				dispatch({ type: "set_contacts", payload: data.contacts }); 
+			})
+			.catch((error) => console.error("Error fetching contacts:", error));
+		}
+		fetchContacts();
 	},[])
-	console.log(store?.contactList,"store")
+
 
 	return (
 		<div className="text-center mt-5">
-			<ContactInput />
+		
 			{store?.contactList.length > 0 && store?.contactList ? 
 			store?.contactList.map((contact)=>{
 				return(
-					<div>
+					<div className="bg-secondary m-2"> 
+						<div className="m-2 border">
+
 						name: {contact.name}
+						</div>
+						<div className="m-2 border">
 						address: {contact.address}
+
+						</div>
+						<div className="m-2 border">
 						phone: {contact.phone}
+
+						</div>
+						<div className="m-2 border">
 						email: {contact.email}
+
+						</div>
 					</div>
 				)
 			})

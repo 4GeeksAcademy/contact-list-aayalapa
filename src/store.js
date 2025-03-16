@@ -1,7 +1,8 @@
 export const initialStore=()=>{
   return{
     agendaStatus:false,
-    contactList:[]
+    contactList:[],
+    contactUrl:"https://playground.4geeks.com/contact/"
   }
 }
 
@@ -32,38 +33,17 @@ export default function storeReducer(store, action = {}) {
     agendaStatus:true,
   }
  }
- if(action.type == "create_contact"){
+ 
 
-  const { contact_data } = action.payload;
-
-  const opt={
-    method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(contact_data)
-
-  }
-  
-  fetch(contactUrl+"agendas/" + slug+"/contacts", opt)
-  .then((resp)=>resp.json())
-  .then((data)=> console.log("create contact: ", data))
-  return{
+ if (action.type == "set_contacts") {
+  return {
     ...store,
-    contactList:[...contactList,contact_data]
-  }
- }
- if(action.type == "get_contacts"){
-  fetch(contactUrl+"agendas/aayalapa/contacts")
-  .then((resp)=>resp.json())
-  .then((data)=>{
-    return{
-      ...store,
-      contactList:data.contacts
-    }
-  })
- }
+    contactList: action.payload
+  };
+}
 
+return store;
+}
 
 
  
@@ -79,4 +59,4 @@ export default function storeReducer(store, action = {}) {
   //   default:
   //     throw Error('Unknown action.');
   // }    
-}
+//}
