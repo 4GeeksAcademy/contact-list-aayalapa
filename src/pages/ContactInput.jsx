@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom";
+import { handleSubmit } from "../api.js";
 
 export const ContactInput = () => {
   const [name, setName] = useState("");
@@ -9,46 +10,18 @@ export const ContactInput = () => {
   const [address, setAddress] = useState("");
   const { store, dispatch } = useGlobalReducer();
 
-  const contactObj = {
-    name,
-    phone,
-    email,
-    address,
-  };
+ const contanctInputState = {
+  name:name,
+  setName:setName,
+  phone:phone,
+  setPhone:setPhone,
+  email:email,
+  setEmail:setEmail,
+  address:address,
+  setAddress:setAddress,
+ }
 
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch(
-        store.contactUrl + "agendas/aayalapa/contacts",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(contactObj),
-        }
-      );
 
-      const data = await response.json();
-      console.log("create contact: ", data);
-
-      // Only update store AFTER successful request
-      if (response.ok) {
-        dispatch({
-          type: "set_contacts",
-          payload: [...store.contactList, contactObj],
-        });
-
-        // Clear form fields
-        setName("");
-        setPhone("");
-        setEmail("");
-        setAddress("");
-      }
-    } catch (error) {
-      console.error("Error creating contact:", error);
-    }
-  };
 
   return (
     <div>
@@ -77,7 +50,7 @@ export const ContactInput = () => {
         onChange={(e) => setAddress(e.target.value)}
       />
       <Link to={"/"}>
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={ ()=>handleSubmit(dispatch,store,contanctInputState)}>Submit</button>
       </Link>
     </div>
   );

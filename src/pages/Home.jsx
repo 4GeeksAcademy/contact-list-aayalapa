@@ -1,29 +1,24 @@
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import { ContactInput } from "../components/ContactInput.jsx";
+import { ContactInput } from "./ContactInput.jsx";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import React, {useEffect} from 'react';
+import { fetchContacts } from "../api.js";
 
 export const Home = () => {
 
 	const {store, dispatch} =useGlobalReducer()
 	
 	useEffect(()=>{
-		const fetchContacts = ()=>{
-			fetch(store?.contactUrl+"agendas/aayalapa/contacts")
-			.then((resp)=>resp.json())
-			.then((data)=>{
-				dispatch({ type: "set_contacts", payload: data.contacts }); 
-			})
-			.catch((error) => console.error("Error fetching contacts:", error));
-		}
-		fetchContacts();
+		
+		fetchContacts(dispatch);
+
 	},[])
 
 
 	return (
 		<div className="text-center mt-5">
 		
-			{store?.contactList.length > 0 && store?.contactList ? 
+			{store?.contactList && store?.contactList.length > 0  ? 
 			store?.contactList.map((contact)=>{
 				return(
 					<div className="bg-secondary m-2"> 
