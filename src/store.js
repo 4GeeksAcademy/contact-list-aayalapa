@@ -3,6 +3,7 @@ export const initialStore=()=>{
     agendaStatus:false,
     contactList:[],
     singleContact:{
+      id:0,
       name:"",
       phone:"",
       email:"",

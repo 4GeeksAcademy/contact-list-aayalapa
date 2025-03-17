@@ -39,7 +39,7 @@ export const fetchContacts = (dispatch)=>{
     .catch((error) => console.error("Error fetching contacts:", error));
 }
 
- export const handleSubmit = async (dispatch,store,contactInputState) => {
+ export const handleSubmitNewContact = async (dispatch,store,contactInputState) => {
     
      const contactObj = {
         name:contactInputState.name,
@@ -61,6 +61,43 @@ export const fetchContacts = (dispatch)=>{
 
       const data = await response.json();
       console.log("create contact: ", data);
+
+    
+        dispatch({
+          type: "set_contacts",
+          payload: [...store.contactList, contactObj],
+        });
+
+    
+        contactInputState.setName("");
+        contactInputState.setPhone("");
+        contactInputState.setEmail("");
+        contactInputState.setAddress("");
+      
+   
+  };
+ export const handleSubmitUpdateContact = async (dispatch,store,contactInputState) => {
+    
+     const contactObj = {
+        name:contactInputState.name,
+        phone:contactInputState.phone,
+        email:contactInputState.email,
+        address:contactInputState.address,
+      };
+// /agendas/{slug}/contacts/{contact_id}
+      const response = await fetch(
+        store.contactUrl + "agendas/alexAyala/contacts/"+contactInputState.id,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(contactObj),
+        }
+      );
+
+      const data = await response.json();
+      console.log("update contact: ", data);
 
     
         dispatch({

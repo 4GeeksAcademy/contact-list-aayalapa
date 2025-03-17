@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom";
-import { handleSubmit } from "../api.js";
-
+import { handleSubmitNewContact,handleSubmitUpdateContact } from "../api.js";
 export const ContactInput = () => {
   const { store, dispatch } = useGlobalReducer();
 
@@ -11,8 +10,9 @@ export const ContactInput = () => {
   const [email, setEmail] = useState(store.singleContact?.email);
   const [address, setAddress] = useState(store.singleContact?.address);
 
- const contanctInputState = {
-  name:name,
+  const contanctInputState = {
+   id:store.singleContact?.id,
+   name:name,
   setName:setName,
   phone:phone,
   setPhone:setPhone,
@@ -51,7 +51,13 @@ export const ContactInput = () => {
         onChange={(e) => setAddress(e.target.value)}
       />
       <Link to={"/"}>
-        <button onClick={ ()=>handleSubmit(dispatch,store,contanctInputState)}>Submit</button>
+      {name == "" ? 
+      
+      <button onClick={ ()=>handleSubmitNewContact(dispatch,store,contanctInputState)}>Submit New Contact</button>
+      :
+      <button onClick={ ()=>handleSubmitUpdateContact(dispatch,store,contanctInputState)}>Update Contact</button>
+      
+      }
       </Link>
     </div>
   );
