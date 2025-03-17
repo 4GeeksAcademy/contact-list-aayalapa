@@ -9,6 +9,7 @@ export const initialStore=()=>{
       email:"",
       address:"",
     },
+    newContact:false,
     contactUrl:"https://playground.4geeks.com/contact/"
   }
 }
@@ -26,11 +27,12 @@ export default function storeReducer(store, action = {}) {
 }
 
  if (action.type == "set_single_contact") {
-  const {contactData} = action.payload;
+  const {contactData,newContactStatus} = action.payload;
 
   return {
     ...store,
-    singleContact: contactData
+    singleContact: contactData,
+    newContact:newContactStatus
   };
 }
 

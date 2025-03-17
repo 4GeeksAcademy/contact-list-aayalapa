@@ -51,8 +51,7 @@ export const ContactInput = () => {
         onChange={(e) => setAddress(e.target.value)}
       />
       <Link to={"/"}>
-      {name == "" ? 
-      
+      {store?.newContact ? 
       <button onClick={ ()=>handleSubmitNewContact(dispatch,store,contanctInputState)}>Submit New Contact</button>
       :
       <button onClick={ ()=>handleSubmitUpdateContact(dispatch,store,contanctInputState)}>Update Contact</button>

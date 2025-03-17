@@ -3,6 +3,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import React, {useEffect} from 'react';
 import { fetchContacts } from "../api.js";
 import { Link } from "react-router-dom";
+import { handleDeleteContact } from "../api.js";
 
 
 export const Home = () => {
@@ -22,7 +23,7 @@ export const Home = () => {
 			{store?.contactList && store?.contactList.length > 0  ? 
 			store?.contactList.map((contact)=>{
 				return(
-					<div className="bg-secondary m-2"> 
+					<div key={contact.id+"contact"} className="bg-secondary m-2"> 
 						<div className="m-2 border">
 
 						name: {contact.name}
@@ -45,12 +46,18 @@ export const Home = () => {
 								 className="bg-white"
 								 onClick={()=> dispatch({
 									type:"set_single_contact",
-									payload:{contactData:contact}
+									payload:{contactData:contact, newContactStatus:false}
 								 })}
 								>
 									Edit
 								</button>
 							</Link>
+							<button 
+								className="bg-danger"
+								onClick={()=> handleDeleteContact(contact.id)}
+							>
+								Delete
+							</button>
 						</div>
 					</div>
 				)

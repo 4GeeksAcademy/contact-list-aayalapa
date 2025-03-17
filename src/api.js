@@ -84,7 +84,6 @@ export const fetchContacts = (dispatch)=>{
         email:contactInputState.email,
         address:contactInputState.address,
       };
-// /agendas/{slug}/contacts/{contact_id}
       const response = await fetch(
         store.contactUrl + "agendas/alexAyala/contacts/"+contactInputState.id,
         {
@@ -110,6 +109,33 @@ export const fetchContacts = (dispatch)=>{
         contactInputState.setPhone("");
         contactInputState.setEmail("");
         contactInputState.setAddress("");
+      
+   
+  };
+
+ export const handleDeleteContact = async (dispatch,store,contactID) => {
+    
+  
+      const response = await fetch(
+        store.contactUrl + "agendas/alexAyala/contacts/"+contactID,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log("delete contact: ", data);
+
+    const newContactList= store.contactList.filter((contact)=> contact.id != contactID)
+    
+        dispatch({
+          type: "set_contacts",
+          payload: newContactList,
+        });
+
       
    
   };
