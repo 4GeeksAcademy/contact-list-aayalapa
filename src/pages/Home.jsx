@@ -1,8 +1,9 @@
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import { ContactInput } from "./ContactInput.jsx";
+
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import React, {useEffect} from 'react';
 import { fetchContacts } from "../api.js";
+import { Link } from "react-router-dom";
+
 
 export const Home = () => {
 
@@ -37,6 +38,19 @@ export const Home = () => {
 						<div className="m-2 border">
 						email: {contact.email}
 
+						</div>
+						<div className=" m-auto">
+							<Link to={"/contactInput"}>
+								<button
+								 className="bg-white"
+								 onClick={()=> dispatch({
+									type:"set_single_contact",
+									payload:{contactData:contact}
+								 })}
+								>
+									Edit
+								</button>
+							</Link>
 						</div>
 					</div>
 				)

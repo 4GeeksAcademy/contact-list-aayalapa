@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { handleSubmit } from "../api.js";
 
 export const ContactInput = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
   const { store, dispatch } = useGlobalReducer();
+
+  const [name, setName] = useState(store.singleContact?.name);
+  const [phone, setPhone] = useState(store.singleContact?.phone);
+  const [email, setEmail] = useState(store.singleContact?.email);
+  const [address, setAddress] = useState(store.singleContact?.address);
 
  const contanctInputState = {
   name:name,
