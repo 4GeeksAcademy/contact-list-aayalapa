@@ -54,7 +54,7 @@ export const Home = () => {
 							</Link>
 							<button 
 								className="bg-danger"
-								onClick={()=> handleDeleteContact(contact.id)}
+								onClick={()=> handleDeleteContact(contact.id,store,dispatch)}
 							>
 								Delete
 							</button>

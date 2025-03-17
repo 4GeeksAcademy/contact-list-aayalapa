@@ -49,7 +49,7 @@ export const fetchContacts = (dispatch)=>{
       };
 
       const response = await fetch(
-        store.contactUrl + "agendas/alexAyala/contacts",
+        contactUrl + "agendas/alexAyala/contacts",
         {
           method: "POST",
           headers: {
@@ -85,7 +85,7 @@ export const fetchContacts = (dispatch)=>{
         address:contactInputState.address,
       };
       const response = await fetch(
-        store.contactUrl + "agendas/alexAyala/contacts/"+contactInputState.id,
+        contactUrl + "agendas/alexAyala/contacts/"+contactInputState.id,
         {
           method: "PUT",
           headers: {
@@ -113,11 +113,11 @@ export const fetchContacts = (dispatch)=>{
    
   };
 
- export const handleDeleteContact = async (dispatch,store,contactID) => {
-    
+ export const handleDeleteContact = async (contactID,store,dispatch) => {
+    console.log(contactID, typeof contactID,"id!!!!!")
   
-      const response = await fetch(
-        store.contactUrl + "agendas/alexAyala/contacts/"+contactID,
+      await fetch(
+        contactUrl + "agendas/alexAyala/contacts/"+contactID,
         {
           method: "DELETE",
           headers: {
@@ -126,11 +126,10 @@ export const fetchContacts = (dispatch)=>{
         }
       );
 
-      const data = await response.json();
-      console.log("delete contact: ", data);
+    
 
     const newContactList= store.contactList.filter((contact)=> contact.id != contactID)
-    
+
         dispatch({
           type: "set_contacts",
           payload: newContactList,
